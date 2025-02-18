@@ -1,5 +1,3 @@
 package com.example.compose.rally.data
 
-class Accounts {
-
-}
+data class Accounts(val name: String, val balance: Double)

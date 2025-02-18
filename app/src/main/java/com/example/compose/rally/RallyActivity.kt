@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -16,6 +17,7 @@ import com.example.compose.rally.ui.theme.RallyTheme
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import com.example.compose.rally.data.Accounts
 import com.example.compose.rally.ui.overview.OverviewScreen
 
 /**
@@ -26,7 +28,9 @@ class RallyActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            RallyApp()
+            // Now you can use Accounts here
+            val myAccount = Accounts("My Checking", 1000.0)
+            Text(text = myAccount.name)
         }
     }
 }
@@ -82,6 +86,10 @@ fun RallyApp() {
     }
 }
 
+fun composable(route: Any, function: () -> Unit) {
+    TODO("Not yet implemented")
+}
+
 // Define the RallyDestination enum class with the correct routes
 enum class RallyDestination(val route: String) {
     Overview("overview"),
@@ -101,7 +109,7 @@ fun NavHostController.navigateSingleTopTo(route: String) {
 }
 
 // Placeholder for rallyTabRowScreens, assuming it's used for your top bar navigation
-val rallyTabRowScreens = listOf(
+val rallyTabRowScreens: List<RallyDestination> = listOf(
     RallyDestination.Overview,
     RallyDestination.Accounts,
     RallyDestination.Bills
