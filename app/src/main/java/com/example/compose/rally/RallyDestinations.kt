@@ -25,10 +25,26 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.example.compose.rally.ui.accounts.AccountsScreen
+import com.example.compose.rally.ui.bills.BillsScreen
+import com.example.compose.rally.ui.overview.OverviewScreen
 
 /**
  * Contract for information needed on every Rally navigation destination
  */
+interface RallyDestination {
+    val icon: ImageVector
+    val route: String
+}
+
+/**
+ * Rally app navigation destinations
+ */
+object Overview : RallyDestination {
+    override val icon = Icons.Filled.PieChart
+    override val route = "overview"
+}
+// ...
 
 sealed interface RallyDestination {
     val icon: ImageVector
@@ -70,3 +86,19 @@ data object SingleAccount : RallyDestination {
 
 // Screens to be displayed in the top RallyTabRow
 val rallyTabRowScreens = listOf(Overview, Accounts, Bills)
+
+NavHost(
+navController = navController,
+startDestination = Overview.route,
+modifier = Modifier.padding(innerPadding)
+) {
+    composable(route = Overview.route) {
+        OverviewScreen()
+    }
+    composable(route = Accounts.route) {
+        AccountsScreen()
+    }
+    composable(route = Bills.route) {
+        BillsScreen()
+    }
+}

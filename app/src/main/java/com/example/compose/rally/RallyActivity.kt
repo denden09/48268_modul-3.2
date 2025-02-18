@@ -16,6 +16,7 @@ import com.example.compose.rally.ui.theme.RallyTheme
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import com.example.compose.rally.ui.overview.OverviewScreen
 
 /**
  * This Activity recreates part of the Rally Material Study from
@@ -60,7 +61,15 @@ fun RallyApp() {
                 modifier = Modifier.padding(innerPadding)
             ) {
                 composable(route = RallyDestination.Overview.route) {
-                    OverviewScreen() // Replace with actual content for Overview
+                    // Pass the navigation functions to OverviewScreen
+                    OverviewScreen(
+                        onClickSeeAllAccounts = {
+                            navController.navigateSingleTopTo(RallyDestination.Accounts.route)
+                        },
+                        onClickSeeAllBills = {
+                            navController.navigateSingleTopTo(RallyDestination.Bills.route)
+                        }
+                    )
                 }
                 composable(route = RallyDestination.Accounts.route) {
                     AccountsScreen() // Replace with actual content for Accounts
@@ -100,8 +109,18 @@ val rallyTabRowScreens = listOf(
 
 // Define composables for each screen
 @Composable
-fun OverviewScreen() {
+fun OverviewScreen(
+    onClickSeeAllAccounts: () -> Unit,
+    onClickSeeAllBills: () -> Unit
+) {
     androidx.compose.material.Text(text = "Overview Screen")
+    // Call these functions when appropriate in the Overview screen
+    androidx.compose.material.Button(onClick = onClickSeeAllAccounts) {
+        androidx.compose.material.Text(text = "See All Accounts")
+    }
+    androidx.compose.material.Button(onClick = onClickSeeAllBills) {
+        androidx.compose.material.Text(text = "See All Bills")
+    }
 }
 
 @Composable
